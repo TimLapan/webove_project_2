@@ -1,0 +1,47 @@
+/* Štýly pre navigačný panel */
+#navbar {
+    background-color: #333;
+    position: fixed;
+    display: flex;
+    top: -50px;
+    width: 100%;
+    z-index: 1000;
+    transition: top 0.3s;
+    white-space: nowrap;
+    /* Zákaz zalomenia textu */
+}
+
+#navbar a {
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+#navbar a:hover {
+    background-color: rgb(60, 122, 173);
+    color: black;
+}
+
+/* Zmenšenie písma pri šírke obrazovky do 425px */
+@media (max-width: 425px) {
+    #navbar a {
+        font-size: 85%;
+    }
+}
+
+/* Zmenšenie písma pri šírke obrazovky do 375px */
+@media (max-width: 375px) {
+    #navbar a {
+        font-size: 73%;
+    }
+}
+
+/* Zmenšenie písma pri šírke obrazovky do 320px */
+@media (max-width: 320px) {
+    #navbar a {
+        font-size: 60%;
+    }
+}

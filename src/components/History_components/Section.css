@@ -1,0 +1,127 @@
+
+/* Sekcia s históriou */
+.history-section {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    position: relative;
+}
+
+/* Štýl nadpisov v sekcii histórie */
+.history-section h2 {
+    color: #66b3ff;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Kontajner pre fotografiu vľavo */
+.fixed-photo-container {
+    position: absolute;
+    top: 60%;
+    /* Umiestnenie fotografie */
+    left: -25%;
+    transform: translateY(-55%);
+    width: 25%;
+    /* Šírka fotografie */
+}
+
+/* Štýly pre samotnú fotografiu */
+.fixed-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Skrytie fotografie na mobilných zariadeniach */
+@media (max-width: 576px) {
+    .fixed-photo-container {
+        display: none;
+    }
+}
+
+/* Vertikálna orientácia fotografie na väčších obrazovkách */
+@media (max-width: 1726px) {
+    .fixed-photo-container {
+        top: 50%;
+        left: -14%;
+        transform: rotate(-90deg);
+        /* Otočenie fotografie o 90 stupňov */
+        width: 200px;
+        /* Prispôsobenie šírky */
+    }
+
+    .fixed-photo {
+        width: auto;
+        height: 150px;
+        /* Nastavenie výšky pre vertikálnu orientáciu */
+    }
+}
+
+/* Adaptívne štýly pre veľké obrazovky */
+@media (max-width: 1430px) {
+    .fixed-photo-container {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        /* Zrušenie transformácie */
+        margin: 20px auto;
+        /* Zarovnanie pod nadpisom */
+        width: 25%;
+        /* Nastavenie šírky pre adaptívne zobrazenie */
+    }
+
+    .fixed-photo {
+        width: 100%;
+        /* Foto zaberá celú šírku kontajnera */
+        height: auto;
+    }
+}
+
+
+/* Centrovanie textového obsahu */
+.text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Štýly pre karty */
+.card {
+    background: #222;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+.card-title {
+    color: #66b3ff;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-text {
+    color: #dcdcdc;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding-left: 12px; /* Установите одинаковые значения для padding */
+    padding-right: 12px;
+    text-align: left; /* Приводим текст к единому выравниванию */
+    box-sizing: border-box; /* Убедитесь, что это значение задано */
+}
+
+  
