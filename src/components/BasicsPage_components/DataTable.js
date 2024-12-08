@@ -3,6 +3,7 @@ import React from "react";
 const DataTable = ({ data }) => (
   <section id="neural-network-components" className="container my-5">
     <h2 className="text-center mb-4 text-light">Hlavné komponenty a smery neurónových sietí</h2>
+    <hr></hr>
     <div className="table-responsive">
       <table className="table table-striped table-bordered table-dark">
         <thead>

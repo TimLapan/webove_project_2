@@ -44,7 +44,7 @@ const ChangeSectionComponent = () => {
   return (
     <section id="sekcia_zmena" className="container my-5">
       <h2 className="text-center mb-4">Sekcia Zmena - Úpravy a Vylepšenia</h2>
-
+      <hr></hr>
       <div className="text-center mb-4">
         <button 
           id="increase-font" 

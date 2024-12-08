@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css"; // Подключение стилей Bootstrap
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Подключение JavaScript Bootstrap
 import HomePage from "./pages/HomePage"; // Главная страница
 import Basics from "./pages/Basics"; // Страница Basics
 import History from "./pages/History";

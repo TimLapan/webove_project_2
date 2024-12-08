@@ -4,26 +4,7 @@ body {
     line-height: 1.6;
     background-color: #1e1e2f; /* Темный фон для страницы */
     color: #f4f4f9; /* Светлый цвет текста */
-}
-
-h1, h2, h3, .nav-link {
-    color: #f4f4f9; /* Светлый цвет для заголовков и ссылок */
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-h2 {
-    font-size: 1.8em;
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
-
-#main_header {
-    text-align: center;
-    color: #ffffff;
+    padding-bottom: 50px;
 }
 
 /* Стили для боковой панели */
@@ -34,10 +15,12 @@ h2 {
     position: sticky;
     top: 60px;
     border-right: 1px solid #343a40;
-    border-radius: 8px;
+    border-radius: 8px; /* Добавили закругленные края */
 }
 
+
 #left_navigation_menu h5 {
+    color: #f4f4f9;
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
@@ -50,8 +33,7 @@ h2 {
     transition: color 0.3s ease;
 }
 
-#left_navigation_menu .nav-link:hover,
-.navbar .nav-link:hover {
+#left_navigation_menu .nav-link:hover {
     color: #00aaff;
 }
 
@@ -60,70 +42,107 @@ h2 {
     color: #00aaff;
     background-color: #343a40;
     border-radius: 4px;
-    padding: 15px;
+    padding: 5px;
 }
 
-/* Стили для верхней навигационной панели */
+
+/* Стили для навигационного меню */
+
 .navbar {
-    background-color: #343a40;
+    background-color: #343a40; /* Темный фон для меню */
 }
-
 .navbar-brand, .navbar-nav .nav-link {
-    color: #f4f4f9 !important;
-    font-size: 1.2rem;
-    line-height: 1.75;
+    color: #f4f4f9 !important; /* Светлый цвет ссылок в меню */
 }
 
-.navbar-brand:hover, .navbar-nav .nav-link:hover {
-    color: #6250a7 !important;
+.navbar-brand {
+    padding-top: 0.5rem; /* Устанавливает верхний внутренний отступ */
+    padding-bottom: 0.5rem; /* Устанавливает нижний внутренний отступ */
+    font-size: 1.2rem; /* Уменьшает размер шрифта для выравнивания */
+    line-height: 1.5; /* Устанавливает высоту строки */
 }
 
-.navbar-brand.nav-link.active, .navbar-nav .nav-link.active {
-    color: #6250a7 !important;
-    font-weight: bolder;
+.navbar-brand:hover {
+    color: #6250a7 !important; /* Цвет при наведении */
 }
 
-
-.navbar-toggler { /* Кнопка */
-    border: none; 
+.navbar-nav .nav-link.active, .navbar-brand.nav-link.active {
+    color: #6250a7 !important; /* Цвет активной ссылки */
+    font-weight: bold;
 }
 
+.nav-item {
+    padding-top: 0.2rem; /* Устанавливает верхний внутренний отступ */
+    padding-bottom: 0.5rem; /* Устанавливает нижний внутренний отступ */
+    font-size: 1.2rem; /* Уменьшает размер шрифта для выравнивания */
+    line-height: 1.75; /* Устанавливает высоту строки */
+}
+.navbar-toggler {
+    border: none; /* Убираем рамку кнопки бургера */
+}
 .navbar-toggler-icon {
-    background-color: #f4f4f9;
+    background-color: #f4f4f9; /* Светлая иконка кнопки-бургера */
+}
+.navbar .nav-link:hover {
+    color: #6250a7 !important; /* Цвет при наведении */
+}
+
+
+/* Заголовки */
+h1, h2, h3 {
+    color: #f4f4f9; /* Светлый цвет заголовков */
+}
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+h2 {
+    font-size: 1.8em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+#main_header {
+    text-align: center;
 }
 
 /* Стили для разделов */
 section {
     margin-bottom: 40px;
     padding: 20px;
-    background: #2a2a3c;
+    background: #2a2a3c; /* Темный фон для секций */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(215, 179, 179, 0.3);
+    box-shadow: 0 4px 8px rgba(215, 179, 179, 0.3); /* Более темная тень */
 }
 
+/* Стили списка */
 ul, ol {
     margin-left: 15px;
+    color: #f4f4f9; /* Светлый цвет для списков */
 }
 
 /* Стили для теста */
 form#quiz-form {
-    background-color: #2a2a3c;
+    background-color: #2a2a3c; /* Темный фон для формы */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-
 form#quiz-form .form-label {
     font-weight: bold;
+    color: #f4f4f9; /* Светлый цвет для меток формы */
 }
-
-.question-text {
-    font-weight: bold;
-}
-
 form#quiz-form input[type="radio"], form#quiz-form input[type="checkbox"] {
     margin-right: 8px;
-    accent-color: #007bff;
+    accent-color: #007bff; /* Цвет для радио и чекбоксов */
+}
+button.btn-primary {
+    background-color: #007bff; /* Цвет кнопки */
+    border-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+button.btn-primary:hover {
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+    border-color: #0056b3;
 }
 
 /* Стили для результатов теста */
@@ -131,52 +150,71 @@ form#quiz-form input[type="radio"], form#quiz-form input[type="checkbox"] {
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;
+    color: #f4f4f9; /* Светлый цвет для результатов */
 }
 
 /* Стили контейнера кода */
 .code-container {
-    background-color: #2a2a3c;
-    border: 3px solid #444;
+    background-color: #2a2a3c; /* Темный фон для контейнера кода */
+    border: 1px solid #444; /* Темная граница */
     padding: 10px;
     border-radius: 4px;
     width: 100%;
-    position: relative;
+    position: relative; /* Позволяет использовать абсолютное позиционирование для дочерних элементов */
 }
 
 .code-block {
-    border-radius: 4px;
-    padding: 15px;
-    font-size: 1rem;
-    font-family: Courier, monospace;
-    overflow-x: auto;
+    border-radius: 4px; /* Закругленные углы */
+    padding: 15px; /* Внутренний отступ */
+    font-size: 1rem; /* Размер шрифта */
+    font-family: Courier, monospace; /* Моноширинный шрифт */
+    overflow-x: auto; /* Прокрутка по горизонтали, если код слишком длинный */
+    color: #f4f4f9; /* Светлый цвет текста */
+}
+
+.code-block code {
+    color: inherit; /* Наследует цвет от .code-block */
+    background-color: transparent; /* Прозрачный фон внутри кода */
+    padding: 0;
+    display: block;
+    overflow: auto;
 }
 
 .copy-button {
-    background-color: #007bff;
+    background-color: #007bff; /* Цвет кнопки */
     color: #fff;
     border: none;
     padding: 2px 7px;
     font-size: 0.8rem;
     border-radius: 65px;
     cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    position: absolute; /* Позиционирование кнопки относительно родительского контейнера */
+    top: 10px; /* Отступ от верхнего края контейнера */
+    right: 10px; /* Отступ от правого края контейнера */
 }
 
 .copy-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+}
+
+.img-fluid {
+    display: block; /* Делает изображение блочным элементом */
+    margin: 0 auto; /* Центрирует изображение */
+    max-width: 90%; /* Ограничивает максимальную ширину */
+    height: auto; /* Сохраняет пропорции изображения */
 }
 
 /* Медиа-запрос для мобильных устройств */
 @media (max-width: 768px) {
-    
     #left_navigation_menu {
         position: relative;
         height: auto;
         width: 100%;
         margin-bottom: 20px;
         border-right: none;
+    }
+    .container {
+        padding: 13px;
     }
     h1 {
         font-size: 1.6em;
@@ -187,11 +225,16 @@ form#quiz-form input[type="radio"], form#quiz-form input[type="checkbox"] {
     .code-container {
         text-align: left;
     }
+    .code-description {
+        position: static; /* Убираем абсолютное позиционирование */
+        width: 100%; /* Кнопка занимает всю ширину контейнера */
+        margin-top: 10px; /* Отступ сверху для отделения от кода */
+    }
     .copy-button {
-        position: static;
-        display: block;
+        position: static; /* Убираем абсолютное позиционирование */
+        display: block; 
         margin: 0 auto;
-        width: 30%;
-        margin-top: 15px;
+        width: 30%; /* Кнопка занимает всю ширину контейнера */
+        margin-top: 15px; /* Отступ сверху для отделения от кода */
     }
 }

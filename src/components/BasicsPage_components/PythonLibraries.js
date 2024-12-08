@@ -36,6 +36,7 @@ const PythonLibraries = () => {
   return (
     <section id="python-libraries" className="container my-5">
       <h2 className="text-center mb-4" style={{color: "white"}}>Python knižnice pre tvorbu neurónových sietí</h2>
+      <hr></hr>
       <p>Python ponúka široké spektrum knižníc pre vývoj a tréning neurónových sietí. Niektoré z najpopulárnejších:</p>
       <ul className="list-unstyled">
         {libraries.map((library) => (

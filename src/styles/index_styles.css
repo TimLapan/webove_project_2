@@ -1,10 +1,4 @@
 /* Общие стили */
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background-color: #1e1e2f; /* Темный фон */
-    padding-bottom: 50px; /* Отступ для фиксации футера */
-}
 #index_white {
     color: #fff; /* Белый текст для элемента с id "index_white" */
 }
@@ -13,7 +7,7 @@ h1, h2, h3 {
 }
 p {
     font-size: 18px;
-    color: #f4f4f9; /* СвQетлый цвет текста */
+    color: #f4f4f9; /* Светлый цвет текста */
 }
 ul {
     margin-top: 15px;
@@ -72,11 +66,13 @@ ol li {
 }
 
 /* Основное содержание */
-.container {
-    background-color: #2a2a3c; /* Темный фон для содержания */
+.container_index {
+    background-color: #2a2a3c;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Более темная тень */
-    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    max-width: 1300px; /* Максимальная ширина, как у Bootstrap */
+    margin: 0 auto; /* Центрирование контейнера */
 }
 h1 {
     font-size: 36px;
@@ -179,7 +175,7 @@ a:hover {
 }
 /* Мобильная адаптация */
 @media (max-width: 768px) {
-    .container {
+    .container_index {
         padding: 15px;
     }
     h1 {

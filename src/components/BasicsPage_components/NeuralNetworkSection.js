@@ -4,6 +4,7 @@ const NeuralNetworksSection = () => {
   return (
     <section id="about-neural-networks" className="container my-5">
       <h2 className="text-center mb-4" style={{color: "white"}}>Čo sú neurónové siete?</h2>
+      <hr></hr>
       <p>Neurónové siete (alebo umelé neurónové siete, UNS) sú algoritmy strojového učenia inšpirované biologickými neurónmi a procesmi v mozgu. Skladajú sa z mnohých vzájomne prepojených uzlov, nazývaných "neuróny", organizovaných do vrstiev. Každý neurón prijíma vstupné údaje, aplikuje na ne váhy a aktivačné funkcie a posiela výsledok do ďalšej vrstvy. Neurónové siete sa dokážu učiť z dát a zlepšovať svoje predpovede, čo ich robí silným nástrojom na riešenie zložitých úloh:</p>
       
       <ul>

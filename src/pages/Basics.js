@@ -3,7 +3,7 @@ import NavigationBar from "../components/HomePage_components/NavigationBar";
 import Sidebar from "../components/BasicsPage_components/Sidebar";
 import NeuralNetworksSection from "../components/BasicsPage_components/NeuralNetworkSection";
 import DataTable from "../components/BasicsPage_components/DataTable";
-import "../styles/basics_styles.css"
+import "../styles/index_styles.css";
 import ConstTableData from "../components/BasicsPage_components/ConstTableData";
 import MiniTest from "../components/BasicsPage_components/MiniTest";
 import Footer from "../components/HomePage_components/Footer";

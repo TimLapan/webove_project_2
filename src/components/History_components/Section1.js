@@ -4,7 +4,7 @@ import "./Section.css";
 
 function Section1() {
   return (
-    <section id="section1" className="history-section dark-theme py-5">
+    <section id="section1" className="history-section dark-theme">
       <div className="container position-relative">
         <h2 className="text-center mb-5">
           1989 - Začiatky vývoja jazyka Python: nápad a inšpirácia

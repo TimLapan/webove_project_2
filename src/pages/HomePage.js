@@ -9,8 +9,8 @@ import "../styles/index_styles.css";
 const HomePage = () => (
   <>
     <Header />
-    <main className="container my-5">
-        <h2>Čo sa môžete naučiť</h2>
+    <main className="container_index my-5">
+        <h2 style={{color: "#007bff"}}>Čo sa môžete naučiť</h2>
         <p>
           Tento kurz zahŕňa hlavné témy súvisiace s neurónovými sieťami a
           Pythonom:
@@ -22,8 +22,8 @@ const HomePage = () => (
           <li>Využitie rámcov ako TensorFlow a PyTorch</li>
           <li>Praktické úlohy</li>
         </ul>
-
-        <h3>Materiály</h3>
+        <hr />
+        <h3 style={{color: "#007bff"}}>Materiály</h3>
         <div className="row">
           <MaterialCard
             link="/history"

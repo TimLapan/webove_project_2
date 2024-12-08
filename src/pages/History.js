@@ -7,7 +7,9 @@ import Section3 from "../components/History_components/Section3";
 import Section4 from "../components/History_components/Section4";
 import Section5 from "../components/History_components/Section5";
 import Section6 from "../components/History_components/Section6";
-
+import "../components/History_components/Section.css"
+import "../components/History_components/Intro.css"
+import Footer from "../components/HomePage_components/Footer";
 function History() {
   return (
     <div>
@@ -19,6 +21,7 @@ function History() {
       <Section4 />
       <Section5 />
       <Section6 />
+      <Footer />
     </div>
   );
 }

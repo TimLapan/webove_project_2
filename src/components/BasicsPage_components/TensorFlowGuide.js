@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import tensorflowImage from '../../assets/images_and_icons/timas_materials/tensorflow.jpg';
-import "../../styles/basics_styles.css"
+import "../../styles/index_styles.css";
 const TensorFlowGuide = () => {
   const [copiedBlock, setCopiedBlock] = useState(null);
 
@@ -63,6 +63,7 @@ probability_model(x_test[:5])`
   return (
     <section id="tensorflow-guide" className="container my-5" >
       <h2 className="text-center mb-4" style={{color: "white"}}>Stručný návod pre TensorFlow 2 pre začiatočníkov</h2>
+      <hr></hr>
       <div className="text-center">
       <img 
         src={tensorflowImage} 
