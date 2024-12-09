@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
@@ -23,9 +24,24 @@ function Navbar() {
 
   return (
     <div id="navbar">
-      <a href="index.html">Hlavná stránka</a>
-      <a href="history.html">História Python</a>
-      <a href="basics.html">Základy neurónových sietí</a>
+      <NavLink
+        to="/"
+        className={({ isActive }) => (isActive ? "active-link" : "")}
+      >
+        Hlavná stránka
+      </NavLink>
+      <NavLink
+        to="/history"
+        className={({ isActive }) => (isActive ? "active-link" : "")}
+      >
+        História Python
+      </NavLink>
+      <NavLink
+        to="/basics"
+        className={({ isActive }) => (isActive ? "active-link" : "")}
+      >
+        Základy neurónových sietí
+      </NavLink>
     </div>
   );
 }
