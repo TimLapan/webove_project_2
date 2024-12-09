@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/AuthModal.css";
 
 const AuthModal = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null); // Состояние для авторизованного пользователя
+
+  // Проверка сессии при загрузке страницы
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch("http://localhost/backend/check_session.php");
+        const result = await response.json();
+        if (result.success) {
+          setLoggedInUser(result.user);
+        }
+      } catch (error) {
+        console.error("Ошибка при проверке сессии:", error);
+      }
+    };
+    checkSession();
+  }, []);
 
   const handleLoginOpen = () => {
     setLoginOpen(true);
@@ -20,83 +37,75 @@ const AuthModal = () => {
     setRegisterOpen(false);
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const username = e.target.elements["register-username"].value;
-    const email = e.target.elements["register-email"].value;
-    const password = e.target.elements["register-password"].value;
-    const confirmPassword = e.target.elements["register-confirm-password"].value;
-  
-    if (password !== confirmPassword) {
-      alert("Heslá sa nezhodujú!");
-      return;
-    }
-  
-    try {
-      const response = await fetch("http://localhost:5000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      });
-  
-      const data = await response.json();
-      if (response.ok) {
-        alert("Úspešná registrácia!");
-        handleClose();
-      } else {
-        alert(data.message || "Chyba počas registrácie");
-      }
-    } catch (error) {
-      console.error("Chyba:", error);
-      alert("Nepodarilo sa pripojiť k serveru");
-    }
-  };
-  
   const handleLogin = async (e) => {
     e.preventDefault();
-    const email = e.target.elements["login-email"].value;
-    const password = e.target.elements["login-password"].value;
-  
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("http://localhost/backend/login.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email: document.getElementById("login-email").value,
+          password: document.getElementById("login-password").value,
+        }),
       });
-  
-      const data = await response.json();
-      if (response.ok) {
-        alert("Úspešné prihlásenie!");
-        console.log("Token:", data.token);
+      const result = await response.json();
+      if (result.success) {
+        setLoggedInUser(result.user);
+        alert("Успешный вход!");
         handleClose();
       } else {
-        alert(data.message || "Chyba počas prihlásenia");
+        alert(result.message);
       }
     } catch (error) {
-      console.error("Chyba:", error);
-      alert("Nepodarilo sa pripojiť k serveru");
+      console.error("Ошибка при входе:", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost/backend/logout.php", {
+        method: "POST",
+      });
+      const result = await response.json();
+      if (result.success) {
+        setLoggedInUser(null);
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Ошибка при выходе:", error);
     }
   };
 
   return (
     <div className="auth-container">
-      <button className="btn btn-primary" onClick={handleLoginOpen}>
-        Prihlásiť sa
-      </button>
-      <button className="btn btn-secondary" onClick={handleRegisterOpen}>
-        Registrácia
-      </button>
+      {loggedInUser ? (
+        <div className="user-info">
+          <p>
+            Добро пожаловать, <strong>{loggedInUser.username}</strong>!
+          </p>
+          <p>Email: {loggedInUser.email}</p>
+          <button onClick={handleLogout} className="btn btn-secondary">
+            Выйти
+          </button>
+        </div>
+      ) : (
+        <>
+          <button className="btn btn-primary" onClick={handleLoginOpen}>
+            Prihlásiť sa
+          </button>
+          <button className="btn btn-secondary" onClick={handleRegisterOpen}>
+            Registrácia
+          </button>
+        </>
+      )}
 
-      {/* Módálne okno pre Prihlásenie */}
       {isLoginOpen && (
         <div className="modal" onClick={handleClose}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>Prihlásenie</h2>
-            <form>
+            <form onSubmit={handleLogin}>
               <label htmlFor="login-email">Email:</label>
               <input type="email" id="login-email" placeholder="Zadajte email" required />
               <label htmlFor="login-password">Heslo:</label>
@@ -105,50 +114,6 @@ const AuthModal = () => {
                 Prihlásiť sa
               </button>
             </form>
-            <button className="btn-close" onClick={handleClose}></button>
-          </div>
-        </div>
-      )}
-
-      {/* Módálne okno pre Registráciu */}
-      {isRegisterOpen && (
-        <div className="modal" onClick={handleClose}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>Registrácia</h2>
-            <form onSubmit={handleLogin}>
-  <label htmlFor="login-email">Email:</label>
-  <input type="email" id="login-email" placeholder="Zadajte email" required />
-  <label htmlFor="login-password">Heslo:</label>
-  <input type="password" id="login-password" placeholder="Zadajte heslo" required />
-  <button type="submit" className="btn btn-primary">
-    Prihlásiť sa
-  </button>
-</form>
-
-<form onSubmit={handleRegister}>
-  <label htmlFor="register-username">Používateľské meno:</label>
-  <input
-    type="text"
-    id="register-username"
-    placeholder="Zadajte používateľské meno"
-    required
-  />
-  <label htmlFor="register-email">Email:</label>
-  <input type="email" id="register-email" placeholder="Zadajte email" required />
-  <label htmlFor="register-password">Heslo:</label>
-  <input type="password" id="register-password" placeholder="Zadajte heslo" required />
-  <label htmlFor="register-confirm-password">Potvrďte heslo:</label>
-  <input
-    type="password"
-    id="register-confirm-password"
-    placeholder="Potvrďte heslo"
-    required
-  />
-  <button type="submit" className="btn btn-primary">
-    Registrovať sa
-  </button>
-</form>
-
             <button className="btn-close" onClick={handleClose}></button>
           </div>
         </div>
