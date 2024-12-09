@@ -1,0 +1,160 @@
+.auth-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-close {
+    margin-top: 10px;
+    background-color: #d9534f;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+}
+
+.btn-close:hover {
+    background-color: #c9302c;
+}
+
+/* Модальное окно */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Более темное затемнение */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #121212; /* Темный фон для модального окна */
+    color: #f0f0f0; /* Светлый текст */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    color: #66b3ff; /* Акцентный цвет заголовка */
+    text-align: center;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-content input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #444; /* Темный цвет границы */
+    border-radius: 5px;
+    background-color: #1e1e1e; /* Темный фон для полей ввода */
+    color: #f0f0f0; /* Светлый текст в полях ввода */
+}
+
+.modal-content input::placeholder {
+    color: #888; /* Светлый текст для плейсхолдера */
+}
+
+.modal-content input:focus {
+    outline: none;
+    border-color: #007bff; /* Цвет при фокусе */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+.modal-content .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #d9534f; /* Красный фон */
+    color: #fff; /* Белый текст */
+    border-radius: 50%; /* Круглая форма */
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+    width: 20px; /* Размер кнопки */
+    height: 20px;
+    line-height: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.modal-content .btn-close:hover {
+    background-color: #e95463;
+    color: #fff;
+}
+
+/* Темный фон при наведении */
+button:hover {
+    background-color: #444;
+    color: #f0f0f0;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+    }
+
+    .modal-content input {
+        font-size: 14px;
+    }
+
+    .modal-content button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
