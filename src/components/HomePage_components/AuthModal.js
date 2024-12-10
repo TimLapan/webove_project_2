@@ -4,9 +4,8 @@ import "../../styles/AuthModal.css";
 const AuthModal = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null); // Состояние для авторизованного пользователя
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
-  // Проверка сессии при загрузке страницы
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -63,6 +62,32 @@ const AuthModal = () => {
     }
   };
 
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost/backend/register.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: document.getElementById("register-username").value,
+          email: document.getElementById("register-email").value,
+          password: document.getElementById("register-password").value,
+        }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert("Регистрация успешна!");
+        handleClose();
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Ошибка при регистрации:", error);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost/backend/logout.php", {
@@ -80,25 +105,27 @@ const AuthModal = () => {
 
   return (
     <div className="auth-container">
-      {loggedInUser ? (
-        <div className="user-info">
-          <p>
-            Добро пожаловать, <strong>{loggedInUser.username}</strong>!
-          </p>
-          <p>Email: {loggedInUser.email}</p>
-          <button onClick={handleLogout} className="btn btn-secondary">
-            Выйти
-          </button>
-        </div>
-      ) : (
-        <>
+    {loggedInUser ? (
+      <>
+      <div className="auth_window">
+        <p>
+          Vitame vas, <strong>{loggedInUser.username}</strong>!
+        </p>
+        <p>Email: {loggedInUser.email}</p>
+        <button onClick={handleLogout} className="btn btn-secondary">
+          Odhlasit sa
+        </button>
+      </div>
+      </>
+    ) : (
+        <div className="button_container d-flex flex-column flex-md-row justify-content-center align-items-center">
           <button className="btn btn-primary" onClick={handleLoginOpen}>
             Prihlásiť sa
           </button>
           <button className="btn btn-secondary" onClick={handleRegisterOpen}>
             Registrácia
           </button>
-        </>
+        </div>
       )}
 
       {isLoginOpen && (
@@ -112,6 +139,31 @@ const AuthModal = () => {
               <input type="password" id="login-password" placeholder="Zadajte heslo" required />
               <button type="submit" className="btn btn-primary">
                 Prihlásiť sa
+              </button>
+            </form>
+            <button className="btn-close" onClick={handleClose}></button>
+          </div>
+        </div>
+      )}
+
+      {isRegisterOpen && (
+        <div className="modal" onClick={handleClose}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Registrácia</h2>
+            <form onSubmit={handleRegister}>
+              <label htmlFor="register-username">Používateľské meno:</label>
+              <input
+                type="text"
+                id="register-username"
+                placeholder="Zadajte používateľské meno"
+                required
+              />
+              <label htmlFor="register-email">Email:</label>
+              <input type="email" id="register-email" placeholder="Zadajte email" required />
+              <label htmlFor="register-password">Heslo:</label>
+              <input type="password" id="register-password" placeholder="Zadajte heslo" required />
+              <button type="submit" className="btn btn-primary">
+                Registrovať sa
               </button>
             </form>
             <button className="btn-close" onClick={handleClose}></button>

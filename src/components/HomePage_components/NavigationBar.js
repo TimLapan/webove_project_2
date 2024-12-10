@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import AuthModal from "./AuthModal";
 const NavigationBar = () => (
   <nav className="navbar navbar-expand-lg navbar-light bg-dark">
     <div className="container-fluid justify-content-center">
@@ -53,6 +53,7 @@ const NavigationBar = () => (
         </ul>
       </div>
     </div>
+    <AuthModal />
   </nav>
 );
 

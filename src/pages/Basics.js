@@ -10,17 +10,16 @@ import Footer from "../components/HomePage_components/Footer";
 import PythonLibraries from "../components/BasicsPage_components/PythonLibraries";
 import TensorFlowGuide from "../components/BasicsPage_components/TensorFlowGuide";
 import ChangeSectionComponent from "../components/BasicsPage_components/ChangeSectionComponent";
+import Header from "../components/BasicsPage_components/Header";
 const BasicsPage = () => {
 
   return (
     <>
-      <NavigationBar />
+      <Header />
       <div className="container-fluid my-5">
         <div className="row">
           <Sidebar />
           <main className="col-md-9 col-lg-10">
-            <h1 class="mb-4" id="main_header">Základy neurónových sietí</h1>
-            <hr />
             <NeuralNetworksSection />
             {/* Таблица с данными */}
             <DataTable data={ConstTableData} />
