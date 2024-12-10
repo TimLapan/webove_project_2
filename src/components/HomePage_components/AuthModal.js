@@ -71,7 +71,9 @@ const AuthModal = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: document.getElementById("register-username").value,
+          meno: document.getElementById("register-meno").value,
+          rok_narodenia: document.getElementById("register-rok-narodenia").value,
+          stat: document.getElementById("register-stat").value,
           email: document.getElementById("register-email").value,
           password: document.getElementById("register-password").value,
         }),
@@ -80,6 +82,8 @@ const AuthModal = () => {
       if (result.success) {
         alert("Регистрация успешна!");
         handleClose();
+      } else if (result.message === "Email already exists") {
+        alert("Этот email уже зарегистрирован. Пожалуйста, используйте другой.");
       } else {
         alert(result.message);
       }
@@ -105,19 +109,19 @@ const AuthModal = () => {
 
   return (
     <div className="auth-container">
-    {loggedInUser ? (
-      <>
-      <div className="auth_window">
-        <p>
-          Vitame vas, <strong>{loggedInUser.username}</strong>!
-        </p>
-        <p>Email: {loggedInUser.email}</p>
-        <button onClick={handleLogout} className="btn btn-secondary">
-          Odhlasit sa
-        </button>
-      </div>
-      </>
-    ) : (
+      {loggedInUser ? (
+        <div className="auth_window">
+          <p>
+            Vitame vas, <strong>{loggedInUser.meno}</strong>!
+          </p>
+          <p>Email: {loggedInUser.email}</p>
+          <p>Štát: {loggedInUser.stat}</p>
+          <p>Rok narodenia: {loggedInUser.rok_narodenia}</p>
+          <button onClick={handleLogout} className="btn btn-secondary">
+            Odhlasit sa
+          </button>
+        </div>
+      ) : (
         <div className="button_container d-flex flex-column flex-md-row justify-content-center align-items-center">
           <button className="btn btn-primary" onClick={handleLoginOpen}>
             Prihlásiť sa
@@ -151,17 +155,26 @@ const AuthModal = () => {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>Registrácia</h2>
             <form onSubmit={handleRegister}>
-              <label htmlFor="register-username">Používateľské meno:</label>
+              <label htmlFor="register-meno">Meno:</label>
+              <input type="text" id="register-meno" placeholder="Zadajte meno" required />
+              <label htmlFor="register-rok-narodenia">Rok narodenia:</label>
               <input
-                type="text"
-                id="register-username"
-                placeholder="Zadajte používateľské meno"
+                type="number"
+                id="register-rok-narodenia"
+                placeholder="Zadajte rok narodenia"
                 required
               />
+              <label htmlFor="register-stat">Štát:</label>
+              <input type="text" id="register-stat" placeholder="Zadajte štát" required />
               <label htmlFor="register-email">Email:</label>
               <input type="email" id="register-email" placeholder="Zadajte email" required />
               <label htmlFor="register-password">Heslo:</label>
-              <input type="password" id="register-password" placeholder="Zadajte heslo" required />
+              <input
+                type="password"
+                id="register-password"
+                placeholder="Zadajte heslo"
+                required
+              />
               <button type="submit" className="btn btn-primary">
                 Registrovať sa
               </button>

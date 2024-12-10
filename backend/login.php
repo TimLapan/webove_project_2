@@ -41,7 +41,9 @@ try {
         // Сохранение данных пользователя в сессии
         $_SESSION['user'] = [
             'id' => $user['id'],
-            'username' => $user['username'],
+            'meno' => $user['meno'], // Используйте правильное поле для имени
+            'rok_narodenia' => $user['rok_narodenia'], // Добавьте год рождения
+            'stat' => $user['stat'], // Добавьте страну
             'email' => $user['email']
         ];
 
@@ -56,5 +58,6 @@ try {
 } catch (PDOException $e) {
     // Обработка ошибок базы данных
     echo json_encode(['success' => false, 'message' => 'Login failed: ' . $e->getMessage()]);
+    exit;
 }
 ?>

@@ -14,26 +14,41 @@ include 'db.php';
 // Получение данных
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['username'], $data['email'], $data['password'])) {
+if (!isset($data['meno'], $data['rok_narodenia'], $data['stat'], $data['email'], $data['password'])) {
     echo json_encode(['success' => false, 'message' => 'Invalid input']);
     exit;
 }
 
-$username = htmlspecialchars($data['username']);
-$email = htmlspecialchars($data['email']);
-$password = password_hash($data['password'], PASSWORD_DEFAULT);
+// Очистка и валидация данных
+$meno = htmlspecialchars($data['meno']);
+$rok_narodenia = intval($data['rok_narodenia']);
+$stat = htmlspecialchars($data['stat']);
+$email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
+$password = password_hash($data['password'], PASSWORD_DEFAULT); // Хэширование пароля
+
+if (!$email) {
+    echo json_encode(['success' => false, 'message' => 'Invalid email format']);
+    exit;
+}
 
 try {
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-    $stmt->bindParam(':username', $username);
+    $stmt = $conn->prepare("INSERT INTO users (meno, rok_narodenia, stat, email, password) VALUES (:meno, :rok_narodenia, :stat, :email, :password)");
+    $stmt->bindParam(':meno', $meno);
+    $stmt->bindParam(':rok_narodenia', $rok_narodenia);
+    $stmt->bindParam(':stat', $stat);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
+    $stmt->bindParam(':password', $password); // Привязываем пароль
     $stmt->execute();
 
     echo json_encode(['success' => true, 'message' => 'Registration successful']);
     exit;
 } catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => 'Registration failed: ' . $e->getMessage()]);
+    // Проверка на дублирование email
+    if ($e->getCode() == 23000) {
+        echo json_encode(['success' => false, 'message' => 'Email already exists']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Registration failed: ' . $e->getMessage()]);
+    }
     exit;
 }
 ?>
