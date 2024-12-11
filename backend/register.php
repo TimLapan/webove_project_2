@@ -14,11 +14,6 @@ include 'db.php';
 // Получение данных
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['meno'], $data['rok_narodenia'], $data['stat'], $data['email'], $data['password'])) {
-    echo json_encode(['success' => false, 'message' => 'Invalid input']);
-    exit;
-}
-
 // Очистка и валидация данных
 $meno = htmlspecialchars($data['meno']);
 $rok_narodenia = intval($data['rok_narodenia']);
@@ -45,7 +40,7 @@ try {
 } catch (PDOException $e) {
     // Проверка на дублирование email
     if ($e->getCode() == 23000) {
-        echo json_encode(['success' => false, 'message' => 'Email already exists']);
+        echo json_encode(['success' => false, 'message' => 'E-mail už existuje']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Registration failed: ' . $e->getMessage()]);
     }

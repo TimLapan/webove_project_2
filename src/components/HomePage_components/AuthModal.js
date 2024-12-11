@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/AuthModal.css";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const AuthModal = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
@@ -45,53 +47,148 @@ const AuthModal = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: document.getElementById("login-email").value,
-          password: document.getElementById("login-password").value,
+          email: document.getElementById("login-email").value.trim(),
+          password: document.getElementById("login-password").value.trim(),
         }),
       });
+  
       const result = await response.json();
+  
       if (result.success) {
         setLoggedInUser(result.user);
-        alert("Успешный вход!");
+        Toastify({
+          text: "Úspešné prihlásenie!",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#28a745", // Зеленый фон для успеха
+          style: {
+            fontSize: "16px",
+            borderRadius: "8px",
+          },
+        }).showToast();
         handleClose();
       } else {
-        alert(result.message);
+        Toastify({
+          text: "Prihlásenie zlyhalo! Nesprávne heslo alebo e-mail",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#FF5733", // Красный фон для ошибки
+          style: {
+            fontSize: "16px",
+            borderRadius: "8px",
+          },
+        }).showToast();
       }
     } catch (error) {
-      console.error("Ошибка при входе:", error);
+      console.error("Chyba pri prihlasovaní:", error);
+      Toastify({
+        text: "Došlo k chybe pri prihlasovaní. Skúste to znova.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#FF5733", // Красный фон для ошибки
+        style: {
+          fontSize: "16px",
+          borderRadius: "8px",
+        },
+      }).showToast();
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+  
+    const meno = document.getElementById("register-meno").value.trim();
+    const rok_narodenia = parseInt(document.getElementById("register-rok-narodenia").value.trim(), 10);
+    const stat = document.getElementById("register-stat").value.trim();
+    const email = document.getElementById("register-email").value.trim();
+    const password = document.getElementById("register-password").value.trim();
+  
+    const currentYear = new Date().getFullYear();
+    if (isNaN(rok_narodenia) || rok_narodenia < 1900 || rok_narodenia > currentYear) {
+      Toastify({
+        text: "Zadajte správny rok narodenia (napríklad 1990).",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#FF5733",
+      }).showToast();
+      return;
+    }
+  
+    if (password.length < 8) {
+      Toastify({
+        text: "Heslo musí obsahovať minimálne 8 znakov.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#FF5733",
+      }).showToast();
+      return;
+    }
+  
     try {
-      const response = await fetch("http://localhost/backend/register.php", {
+      const response = await fetch("https://restcountries.com/v3.1/all");
+      const countries = await response.json();
+  
+      const validCountry = countries.some(
+        (country) => country.name.common.toLowerCase() === stat.toLowerCase()
+      );
+  
+      if (!validCountry) {
+        Toastify({
+          text: "Zadajte platný názov krajiny.",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#F57F17",
+        }).showToast();
+        return;
+      }
+  
+      const data = { meno, rok_narodenia, stat, email, password };
+  
+      const registerResponse = await fetch("http://localhost/backend/register.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          meno: document.getElementById("register-meno").value,
-          rok_narodenia: document.getElementById("register-rok-narodenia").value,
-          stat: document.getElementById("register-stat").value,
-          email: document.getElementById("register-email").value,
-          password: document.getElementById("register-password").value,
-        }),
+        body: JSON.stringify(data),
       });
-      const result = await response.json();
+  
+      const result = await registerResponse.json();
       if (result.success) {
-        alert("Регистрация успешна!");
+        Toastify({
+          text: "Registrácia bola úspešná!",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#28a745",
+        }).showToast();
         handleClose();
-      } else if (result.message === "Email already exists") {
-        alert("Этот email уже зарегистрирован. Пожалуйста, используйте другой.");
       } else {
-        alert(result.message);
+        Toastify({
+          text: result.message || "Došlo k chybe pri registrácii.",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#FF5733",
+        }).showToast();
       }
     } catch (error) {
-      console.error("Ошибка при регистрации:", error);
+      console.error("Chyba pri registrácii:", error);
+      Toastify({
+        text: "Došlo k chybe na strane klienta.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#FF5733",
+      }).showToast();
     }
   };
-
+  
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost/backend/logout.php", {
@@ -100,10 +197,23 @@ const AuthModal = () => {
       const result = await response.json();
       if (result.success) {
         setLoggedInUser(null);
-        alert(result.message);
+        Toastify({
+          text: "Úspešne ste sa odhlásili zo svojho účtu.",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#28a745",
+        }).showToast();
       }
     } catch (error) {
       console.error("Ошибка при выходе:", error);
+      Toastify({
+        text: "Произошла ошибка при выходе.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#FF5733",
+      }).showToast();
     }
   };
 
@@ -114,9 +224,9 @@ const AuthModal = () => {
           <p>
             Vitame vas, <strong>{loggedInUser.meno}</strong>!
           </p>
-          <p>Email: {loggedInUser.email}</p>
-          <p>Štát: {loggedInUser.stat}</p>
-          <p>Rok narodenia: {loggedInUser.rok_narodenia}</p>
+          <p><strong>Email</strong>: {loggedInUser.email}</p>
+          <p><strong>Štát</strong>: {loggedInUser.stat}</p>
+          <p><strong>Rok narodenia:</strong> {loggedInUser.rok_narodenia}</p>
           <button onClick={handleLogout} className="btn btn-secondary">
             Odhlasit sa
           </button>
@@ -133,8 +243,8 @@ const AuthModal = () => {
       )}
 
       {isLoginOpen && (
-        <div className="modal" onClick={handleClose}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal">
+          <div className="modal-content">
             <h2>Prihlásenie</h2>
             <form onSubmit={handleLogin}>
               <label htmlFor="login-email">Email:</label>
@@ -151,8 +261,8 @@ const AuthModal = () => {
       )}
 
       {isRegisterOpen && (
-        <div className="modal" onClick={handleClose}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal">
+          <div className="modal-content">
             <h2>Registrácia</h2>
             <form onSubmit={handleRegister}>
               <label htmlFor="register-meno">Meno:</label>
@@ -164,7 +274,7 @@ const AuthModal = () => {
                 placeholder="Zadajte rok narodenia"
                 required
               />
-              <label htmlFor="register-stat">Štát:</label>
+              <label htmlFor="register-stat">Krajina:</label>
               <input type="text" id="register-stat" placeholder="Zadajte štát" required />
               <label htmlFor="register-email">Email:</label>
               <input type="email" id="register-email" placeholder="Zadajte email" required />
