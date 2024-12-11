@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();
-
+//
 // Middleware
 app.use(bodyParser.json());
 const cors = require("cors");
