@@ -1,7 +1,18 @@
 import React, { useState } from "react";
+import DOMPurify from 'dompurify';
 
 const MiniTest = () => {
   const [result, setResult] = useState({ text: "", color: "" });
+  const [question4, setQuestion4] = useState('');
+  const [question5, setQuestion5] = useState('');
+  const [question6, setQuestion6] = useState('');
+
+  const handleInputChange = (e, setter) => {
+    // Санитизация и ограничение ввода
+    const sanitizedValue = DOMPurify.sanitize(e.target.value);
+    const limitedValue = sanitizedValue.substring(0, 200); // Ограничение длины
+    setter(limitedValue);
+  };
 
   const checkQuiz = () => {
     let score = 0;
@@ -21,12 +32,9 @@ const MiniTest = () => {
     const correctAnswersText = ["model.evaluate()", "Softmax", "Sequential"];
 
     // Проверяем правильность ответов на вопросы 4-6
-    for (let i = 4; i <= 6; i++) {
-      const userAnswer = document.querySelector(`input[name="question${i}"]`).value.trim();
-      if (userAnswer.toLowerCase() === correctAnswersText[i - 4].toLowerCase()) {
-        score++;
-      }
-    }
+    if (question4.toLowerCase() === correctAnswersText[0].toLowerCase()) score++;
+    if (question5.toLowerCase() === correctAnswersText[1].toLowerCase()) score++;
+    if (question6.toLowerCase() === correctAnswersText[2].toLowerCase()) score++;
 
     // Формируем сообщение в зависимости от результата
     const resultText = `Odpovedali ste správne na ${score} z 6 otazok`;
@@ -97,23 +105,50 @@ const MiniTest = () => {
         </div>
 
        {/* Вопрос 4 */}
-    <div className="mb-3">
-      <label className="form-label">4. Aká metóda sa používa na hodnotenie presnosti modelu na testovacích dátach?</label>
-      <input type="text" className="form-control" name="question4" placeholder="Zadajte vašu odpoveď" />
-    </div>
+       <div className="mb-3">
+        <label className="form-label">4. Aká metóda sa používa na hodnotenie presnosti modelu na testovacích dátach?</label>
+        <input 
+          type="text" 
+          className="form-control" 
+          name="question4" 
+          placeholder="Zadajte vašu odpoveď" 
+          value={question4}
+          onChange={(e) => handleInputChange(e, setQuestion4)}
+          maxLength={200} // HTML5 ограничение длины
+          pattern="[A-Za-zА-Яа-я0-9\s]+" // Разрешены только буквы, цифры и пробелы
+        />
+      </div>
 
-    {/* Вопрос 5 */}
-    <div className="mb-3">
-      <label className="form-label">5. Ktorá vrstva sa pridáva na získanie pravdepodobností tried?</label>
-      <input type="text" className="form-control" name="question5" placeholder="Zadajte vašu odpoveď" />
-    </div>
+      {/* Вопрос 5 */}
+      <div className="mb-3">
+        <label className="form-label">5. Ktorá vrstva sa pridáva na získanie pravdepodobností tried?</label>
+        <input 
+          type="text" 
+          className="form-control" 
+          name="question5" 
+          placeholder="Zadajte vašu odpoveď" 
+          value={question5}
+          onChange={(e) => handleInputChange(e, setQuestion5)}
+          maxLength={200}
+          pattern="[A-Za-zА-Яа-я0-9\s]+"
+        />
+      </div>
 
-    {/* Вопрос 6 */}
-    <div className="mb-3">
-      <label className="form-label">6. Ktorá metóda sa používa na vytvorenie sekvenčného modelu neurónovej siete?</label>
-      <input type="text" className="form-control" name="question6" placeholder="Zadajte vašu odpoveď" />
-    </div>
-
+      {/* Вопрос 6 */}
+      <div className="mb-3">
+        <label className="form-label">6. Ktorá metóda sa používa na vytvorenie sekvenčného modelu neurónovej siete?</label>
+        <input 
+          type="text" 
+          className="form-control" 
+          name="question6" 
+          placeholder="Zadajte vašu odpoveď" 
+          value={question6}
+          onChange={(e) => handleInputChange(e, setQuestion6)}
+          maxLength={200}
+          pattern="[A-Za-zА-Яа-я0-9\s]+"
+        />
+      </div>
+      
         <button type="button" className="btn btn-primary" onClick={checkQuiz}>
           Skontrolovať odpovede
         </button>

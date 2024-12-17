@@ -6,6 +6,7 @@ import pythonHistoryImage from "../assets/images_and_icons/timas_materials/pytho
 import basicsCardImage from "../assets/images_and_icons/timas_materials/basics.jpg";
 import "../styles/index_styles.css";
 
+
 const HomePage = () => (
   <>
     <Header />

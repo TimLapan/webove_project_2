@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import "../../styles/AuthModal.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+import DOMPurify from 'dompurify';
+import { useNavigate } from "react-router-dom";
 
 const AuthModal = () => {
+  const navigate = useNavigate();
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -40,20 +43,35 @@ const AuthModal = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const email = DOMPurify.sanitize(document.getElementById("login-email").value.trim());
+    const password = DOMPurify.sanitize(document.getElementById("login-password").value.trim());
+
+    // Проверка на admin/admin
+    if (email === "admin@com" && password === "admin") {
+      Toastify({
+        text: "Úspešné prihlásenie ako administrátor!",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#28a745",
+        style: {
+          fontSize: "16px",
+          borderRadius: "8px",
+        },
+      }).showToast();
+      navigate("/admin"); // Перенаправление на страницу с таблицей юзеров
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost/backend/login.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: document.getElementById("login-email").value.trim(),
-          password: document.getElementById("login-password").value.trim(),
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
-  
+
       const result = await response.json();
-  
+
       if (result.success) {
         setLoggedInUser(result.user);
         Toastify({
@@ -61,11 +79,7 @@ const AuthModal = () => {
           duration: 3000,
           gravity: "top",
           position: "center",
-          backgroundColor: "#28a745", // Зеленый фон для успеха
-          style: {
-            fontSize: "16px",
-            borderRadius: "8px",
-          },
+          backgroundColor: "#28a745",
         }).showToast();
         handleClose();
       } else {
@@ -74,11 +88,7 @@ const AuthModal = () => {
           duration: 3000,
           gravity: "top",
           position: "center",
-          backgroundColor: "#FF5733", // Красный фон для ошибки
-          style: {
-            fontSize: "16px",
-            borderRadius: "8px",
-          },
+          backgroundColor: "#FF5733",
         }).showToast();
       }
     } catch (error) {
@@ -88,11 +98,7 @@ const AuthModal = () => {
         duration: 3000,
         gravity: "top",
         position: "center",
-        backgroundColor: "#FF5733", // Красный фон для ошибки
-        style: {
-          fontSize: "16px",
-          borderRadius: "8px",
-        },
+        backgroundColor: "#FF5733",
       }).showToast();
     }
   };
@@ -100,11 +106,11 @@ const AuthModal = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
   
-    const meno = document.getElementById("register-meno").value.trim();
-    const rok_narodenia = parseInt(document.getElementById("register-rok-narodenia").value.trim(), 10);
-    const stat = document.getElementById("register-stat").value.trim();
-    const email = document.getElementById("register-email").value.trim();
-    const password = document.getElementById("register-password").value.trim();
+    const meno = DOMPurify.sanitize(document.getElementById("register-meno").value.trim());
+    const rok_narodenia = parseInt(DOMPurify.sanitize(document.getElementById("register-rok-narodenia").value.trim()), 10);
+    const stat = DOMPurify.sanitize(document.getElementById("register-stat").value.trim());
+    const email = DOMPurify.sanitize(document.getElementById("register-email").value.trim());
+    const password = DOMPurify.sanitize(document.getElementById("register-password").value.trim());
   
     const currentYear = new Date().getFullYear();
     if (isNaN(rok_narodenia) || rok_narodenia < 1900 || rok_narodenia > currentYear) {
@@ -275,7 +281,7 @@ const AuthModal = () => {
                 required
               />
               <label htmlFor="register-stat">Krajina:</label>
-              <input type="text" id="register-stat" placeholder="Zadajte štát" required />
+              <input type="text" id="register-stat" placeholder="Zadajte krajinu" required />
               <label htmlFor="register-email">Email:</label>
               <input type="email" id="register-email" placeholder="Zadajte email" required />
               <label htmlFor="register-password">Heslo:</label>
