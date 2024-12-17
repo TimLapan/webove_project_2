@@ -1,5 +1,4 @@
 import React from "react";
-import NavigationBar from "../components/HomePage_components/NavigationBar";
 import Sidebar from "../components/BasicsPage_components/Sidebar";
 import NeuralNetworksSection from "../components/BasicsPage_components/NeuralNetworkSection";
 import DataTable from "../components/BasicsPage_components/DataTable";

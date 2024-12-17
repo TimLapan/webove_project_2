@@ -1,6 +1,5 @@
 import React from "react";
 import NavigationBar from "../HomePage_components/NavigationBar";
-import AuthModal from "../HomePage_components/AuthModal";
 
 const Header = () => (
   <header className="bg-dark text-white p-3">
