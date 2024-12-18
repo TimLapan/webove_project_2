@@ -13,11 +13,12 @@ $filter_stat = isset($_GET['stat']) ? htmlspecialchars($_GET['stat']) : '';
 $filter_email = isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '';
 $filter_rok_narodenia = isset($_GET['rok_narodenia']) ? intval($_GET['rok_narodenia']) : null;
 
-// Базовый SQL-запрос
+// Základný SQL dotaz
 $query = "SELECT id, meno, rok_narodenia, stat, email, created_at FROM users WHERE 1=1";
 $params = [];
 
-// Добавляем фильтры к запросу
+// Pridanie filtrov do požiadavky
+
 if ($filter_meno) {
     $query .= " AND meno LIKE :meno";
     $params[':meno'] = "%$filter_meno%";
@@ -38,20 +39,20 @@ if ($filter_rok_narodenia) {
 
 
 try {
-    // Подготавливаем и выполняем SQL-запрос
+    // Pripravenie a spustenie SQL dotazu
     $stmt = $conn->prepare($query);
     $stmt->execute($params);
 
-    // Получаем данные
+    // Získavanie údajov
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Отправляем результат клиенту
+    // Odoslanie výsledku klientovi
     echo json_encode([
         'success' => true,
         'users' => $users
     ]);
 } catch (PDOException $e) {
-    // Обработка ошибок
+    // Spracovanie chýb
     echo json_encode([
         'success' => false,
         'message' => 'Error fetching users: ' . $e->getMessage()
