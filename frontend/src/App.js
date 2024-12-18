@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css"; // Подключение стилей Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css"; //Prepojenie štýlov Bootstrap
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Подключение JavaScript Bootstrap
 import HomePage from "./pages/HomePage"; // Главная страница
 import Basics from "./pages/Basics"; // Страница Basics
@@ -9,14 +9,14 @@ import AdminPage from "./pages/Admin_page";
 const App = () => (
   <Router>
     <Routes>
-      {/* Главная страница HomePage */}
+      {/* HomePage */}
       <Route path="/" element={<HomePage />} />
 
       <Route path="/admin" element={<AdminPage />} />
-      {/* Страница Basics */}
+      {/* page Basics */}
       <Route path="/basics" element={<Basics />} />
 
-      {/* Страница History */}
+      {/* page History */}
       <Route path="/history" element={<History />} />
     </Routes>
   </Router>
